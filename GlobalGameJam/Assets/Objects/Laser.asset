@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Laser
   m_EditorClassIdentifier: 
   name: laser
-  sprite: {fileID: 21300000, guid: 23e77b1e145e1704b88dcbb3bd465f82, type: 3}
+  sprite: {fileID: 21300000, guid: e2cc7a2800235d045aaaffa7eadf82af, type: 3}

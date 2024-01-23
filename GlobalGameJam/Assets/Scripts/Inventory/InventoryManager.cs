@@ -11,5 +11,11 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         _inventory.Initialize(_instance);
+        PickUp.pickupItem += _inventory.SetList;
+    }
+
+    public Inventory GetInventory()
+    {
+        return _inventory;
     }
 }

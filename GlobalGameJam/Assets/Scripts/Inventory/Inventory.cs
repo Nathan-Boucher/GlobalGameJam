@@ -17,6 +17,7 @@ public class Inventory
     public void SetList(InventoryInstance newInstanceObject)
     {
         listeObject.Add(newInstanceObject);
+        ActualizeUI();
     }
     
     public List<InventoryInstance> GetListe()
