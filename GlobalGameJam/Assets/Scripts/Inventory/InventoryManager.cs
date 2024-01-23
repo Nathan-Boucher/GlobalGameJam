@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField] private Inventory _inventory;
-    [SerializeField] private InventoryInstance laser;
+    [SerializeField] private Inventory _inventory = new Inventory();
+    [SerializeField] private InventoryInstance _instance;
 
     private void Start()
     {
-        _inventory.Initialize(laser);
+        _inventory.Initialize(_instance);
     }
 }

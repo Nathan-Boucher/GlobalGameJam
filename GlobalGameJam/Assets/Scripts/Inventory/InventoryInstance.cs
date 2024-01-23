@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class InventoryInstance : MonoBehaviour
+public class InventoryInstance
 {
     public Objects objet;
     
