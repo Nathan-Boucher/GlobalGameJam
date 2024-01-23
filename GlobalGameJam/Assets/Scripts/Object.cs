@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Object : MonoBehaviour
 {
-    public static Object currentObject;
-    private bool selected;
+    [SerializeField] private bool find;
+    
     private Vector3 offset;
     private Collider2D Collider2D;
 
@@ -17,6 +17,10 @@ public class Object : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        if (!find)
+        {
+            find = true;
+        }
         offset = transform.position - MousePositionScreen();
     }
 
