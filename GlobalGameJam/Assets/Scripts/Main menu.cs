@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Mainmenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject main,options;
+public void PlayGame()
+{
+    SceneManager.LoadScene("MoveObject");
+}
+public void Options()
+{
+    main.SetActive(false);
+    options.SetActive(true);
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public void QuitGame()
+{
+    Application.Quit();
+}
+
 }
