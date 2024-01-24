@@ -10,6 +10,7 @@ public class ClickInventory : MonoBehaviour
     public void OnClickSlot(int index)
     {
         selectItem?.Invoke(index);
+        HandInventory();
     }
 
     public void HandInventory()

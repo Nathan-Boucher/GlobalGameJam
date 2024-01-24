@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class Object : MonoBehaviour
 {
-    [SerializeField] private bool find;
-    
     private Vector3 offset;
     private Collider2D Collider2D;
+
+    public static event Action mugdrop;
 
     void Start()
     {
@@ -17,10 +17,6 @@ public class Object : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!find)
-        {
-            find = true;
-        }
         offset = transform.position - MousePositionScreen();
     }
 
@@ -40,6 +36,7 @@ public class Object : MonoBehaviour
             if (hit.transform.CompareTag("DropItem"))
             {
                 transform.position = hit.transform.position;
+                mugdrop.Invoke();
             }
         }
 

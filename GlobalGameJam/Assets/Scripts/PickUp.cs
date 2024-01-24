@@ -7,12 +7,21 @@ using UnityEngine.EventSystems;
 
 public class PickUp : MonoBehaviour
 {
-    public static event Action<InventoryInstance> pickupItem; 
+    public static event Action<InventoryInstance> pickupItem;
+    public static event Action pickUpMug;
     public InventoryInstance item;
+    public bool enableToTake;
     private void OnMouseDown()
     {
-        Debug.Log("Je prend cette item");
-        pickupItem.Invoke(item);
-        Destroy(this.gameObject);
+        if (enableToTake)
+        {
+            pickupItem.Invoke(item);
+            if (item.objet.name == "Mug")
+            {
+                pickUpMug.Invoke();
+            }
+            Destroy(this.gameObject);
+        }
+        
     }
 }
