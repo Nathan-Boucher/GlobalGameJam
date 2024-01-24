@@ -7,6 +7,12 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject mugPrefab , telecommandePrefab;
     [SerializeField] private Transform spawnPosition;
     [SerializeField] private bool mugUsed;
+    [SerializeField] public BoxCollider2D colliderTV;
+
+    void Start()
+    {
+        colliderTV.enabled = false;
+    }
     public void Laser()
     {
         Debug.Log(("J'utilise le laser"));

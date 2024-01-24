@@ -12,7 +12,8 @@ public enum StateCat
     grinch,
     sleep,
     idleGrinch,
-    push
+    push,
+    scared
 }
 public class Cat : MonoBehaviour
 {
@@ -90,6 +91,13 @@ public class Cat : MonoBehaviour
         ActualizeAnimator();
     }
 
+    public void Scared()
+    {
+        state = StateCat.scared;
+        transform.position = ActualPlace.nextPosition;
+        direction = transform.position;
+        ActualizeAnimator();
+    }
     public void Jump(Vector3 value)
     {
         state = StateCat.jump;
@@ -227,6 +235,13 @@ public class Cat : MonoBehaviour
                 _animator.SetBool("walk" , false);
                 _animator.SetBool("sleep" , false);
                 _animator.SetBool("idleGrinch" , true);
+                break;
+            case StateCat.scared :
+                GetComponent<SpriteRenderer>().sortingOrder = 7;
+                GetComponent<SpriteRenderer>().flipX = true;
+                transform.Rotate(0 , 0 , -9.7f , Space.Self);
+                _animator.SetBool("idleGrinch" , false);
+                _animator.SetBool("scared" , true);
                 break;
             
         }

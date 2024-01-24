@@ -45,6 +45,7 @@ public class Object : MonoBehaviour
             {
                 transform.position = hit.transform.position;
                 telecommandeDrop.Invoke();
+                Destroy(gameObject);
             }
         }
 

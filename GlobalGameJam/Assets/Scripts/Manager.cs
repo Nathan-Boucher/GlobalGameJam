@@ -9,12 +9,14 @@ public class Manager : MonoBehaviour
     [SerializeField] private Cat _cat;
     [SerializeField] private List<Transform> DifferentsMoves;
     [SerializeField] private List<PickUp> allObjectsPickUp;
+    [SerializeField] private GameObject tele;
     void Start()
     {
         ClickInventory.selectItem += SelectionItem;
         PickUp.pickUpMug += doStart;
         Object.mugdrop += EnableObject;
         Object.mugdrop += doAfterStart;
+        Object.telecommandeDrop += DogSpawn;
     }
 
     void doStart()
@@ -26,7 +28,12 @@ public class Manager : MonoBehaviour
     {
         _cat.Walk(DifferentsMoves[3].position);
     }
-    
+
+    void DogSpawn()
+    {
+        tele.SetActive(true);
+        _cat.Scared();
+    }
     void SelectionItem(int index)
     {
         string nameIndex = "";
@@ -39,6 +46,7 @@ public class Manager : MonoBehaviour
         else if (nameIndex == "Télécommande")
         {
             player.Telecommande();
+            player.colliderTV.enabled = true;
         }
         else if(nameIndex == "Mug")
         {
