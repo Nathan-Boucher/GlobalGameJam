@@ -13,10 +13,12 @@ public enum StateCat
     sleep,
     idleGrinch,
     push,
-    scared
+    scared,
+    breakdance
 }
 public class Cat : MonoBehaviour
 {
+    public static event Action teleEnd;
     [SerializeField] private float speed;
     [SerializeField] private Animator _animator;
     [SerializeField] private Vector3 direction,startPosition;
@@ -71,6 +73,7 @@ public class Cat : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         IdleGrinch();
     }
+    
     public void IdleGrinch()
     {
         state = StateCat.idleGrinch;
@@ -90,12 +93,32 @@ public class Cat : MonoBehaviour
         state = StateCat.idle;
         ActualizeAnimator();
     }
-
+    private bool scaredstatut;
     public void Scared()
     {
         state = StateCat.scared;
-        transform.position = ActualPlace.nextPosition;
+        //transform.position = ActualPlace.nextPosition;
         direction = transform.position;
+        ActualizeAnimator();
+        if (!scaredstatut)
+        {
+            StartCoroutine(ScaredTime());
+        }
+    }
+
+    IEnumerator ScaredTime()
+    {
+        yield return new WaitForSeconds(3f);
+        state = StateCat.grinch;
+        transform.position = ActualPlace.nextPosition;
+        scaredstatut = false;
+        Grinch();
+        ActualizeAnimator();
+    }
+
+    public void BreakDance()
+    {
+        state = StateCat.breakdance;
         ActualizeAnimator();
     }
     public void Jump(Vector3 value)
@@ -116,12 +139,24 @@ public class Cat : MonoBehaviour
     }
 
     private bool grinchstatut;
+    [SerializeField] private int a;
     void Grinch()
     {
+        a++;
+        if (a == 2)
+        {
+            StartCoroutine(timeChaussonsStart());
+        }
         if (!grinchstatut)
         {
             StartCoroutine(GrinchTime());
         }
+    }
+
+    IEnumerator timeChaussonsStart()
+    {
+        yield return new WaitForSeconds(3f);
+        teleEnd.Invoke();
     }
     IEnumerator GrinchTime()
     {
@@ -129,7 +164,7 @@ public class Cat : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         state = StateCat.grinch;
         ActualizeAnimator();
-        grinchstatut = false;
+        //grinchstatut = false;
     }
     private bool sleepstatut;
     void Sleep()
@@ -157,6 +192,8 @@ public class Cat : MonoBehaviour
             }
         }
     }
+
+    private bool z;
     void NewMovement()
     {
         if (ActualPlace.nextMove == "Jump")
@@ -164,7 +201,7 @@ public class Cat : MonoBehaviour
             Jump(ActualPlace.nextPosition);
         }
 
-        if (ActualPlace.nextMove == "Grinch")
+        if (ActualPlace.nextMove == "Grinch" && !grinchstatut) 
         {
             Grinch();
         }
@@ -174,6 +211,16 @@ public class Cat : MonoBehaviour
             state = StateCat.sleep;
             Sleep();
         }
+
+        if (!z)
+        {
+            if (ActualPlace.nextMove == "IdleGringe")
+            {
+                IdleGrinch();
+                z = true;
+            }
+        }
+        
     }
     private void ActualizeAnimator()
     {
@@ -206,8 +253,10 @@ public class Cat : MonoBehaviour
                 _animator.SetBool("walk" , false);
                 break;
             case StateCat.grinch :
+                transform.rotation = Quaternion.Euler(0,0,0);
                 _animator.SetBool("grinch" , true);
                 _animator.SetBool("idle" , false);
+                _animator.SetBool("scared" , false);
                 break;
             case StateCat.sleep :
                 _animator.SetBool("sleep" , true);
@@ -242,6 +291,12 @@ public class Cat : MonoBehaviour
                 transform.Rotate(0 , 0 , -9.7f , Space.Self);
                 _animator.SetBool("idleGrinch" , false);
                 _animator.SetBool("scared" , true);
+                break;
+            case StateCat.breakdance :
+                GetComponent<SpriteRenderer>().sortingOrder = 7;
+                GetComponent<SpriteRenderer>().flipX = false;
+                _animator.SetBool("idleGrinch" , false);
+                _animator.SetBool("breakdance" , true);
                 break;
             
         }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject mugPrefab , telecommandePrefab;
+    [SerializeField] private GameObject mugPrefab , telecommandePrefab , chaussonPrefab;
     [SerializeField] private Transform spawnPosition;
-    [SerializeField] private bool mugUsed;
-    [SerializeField] public BoxCollider2D colliderTV;
+    [SerializeField] private bool mugUsed , chaussonUsed;
+    [SerializeField] public BoxCollider2D colliderTV,colliderCat;
 
     void Start()
     {
@@ -32,5 +32,15 @@ public class Player : MonoBehaviour
             GameObject obj =  Instantiate(mugPrefab, spawnPosition.position , Quaternion.identity);
         }
         mugUsed = true;
+    }
+
+    public void Chausson()
+    {
+        if (!chaussonUsed)
+        {
+            Debug.Log("J'utilise les chaussons");
+            GameObject obj = Instantiate(chaussonPrefab, spawnPosition.position, Quaternion.identity);
+        }
+        chaussonUsed = true;
     }
 }

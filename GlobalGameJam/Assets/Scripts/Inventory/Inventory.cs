@@ -17,6 +17,11 @@ public class Inventory
     public void SetList(InventoryInstance newInstanceObject)
     {
         listeObject.Add(newInstanceObject);
+        if (listeObject.Count == 4)
+        {
+            Debug.Log(listeObject[3].objet.name);
+        }
+        
         ActualizeUI();
     }
     

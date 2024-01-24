@@ -12,6 +12,7 @@ public class Object : MonoBehaviour
 
     public static event Action mugdrop; 
     public static event Action telecommandeDrop;
+    public static event Action chaussonDrop;
 
     void Start()
     {
@@ -45,6 +46,12 @@ public class Object : MonoBehaviour
             {
                 transform.position = hit.transform.position;
                 telecommandeDrop.Invoke();
+                Destroy(gameObject);
+            }
+            else if (hit.transform.CompareTag("DropChausson") && nameObject == "chausson")
+            {
+                transform.position = hit.transform.position;
+                chaussonDrop.Invoke();
                 Destroy(gameObject);
             }
         }

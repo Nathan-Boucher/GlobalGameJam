@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 971f21faa952b194a81ba0b5a27b45b7, type: 3}
-  m_Name: "T\xE9l\xE9commande"
+  m_Name: Chausson
   m_EditorClassIdentifier: 
-  name: "T\xE9l\xE9commande"
-  sprite: {fileID: 21300000, guid: db1f6a4e31bec92428453588092f33a8, type: 3}
+  name: chausson
+  sprite: {fileID: 21300000, guid: 91eb247538e556d48808090d757bfcb3, type: 3}

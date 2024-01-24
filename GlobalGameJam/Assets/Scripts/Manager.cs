@@ -9,7 +9,7 @@ public class Manager : MonoBehaviour
     [SerializeField] private Cat _cat;
     [SerializeField] private List<Transform> DifferentsMoves;
     [SerializeField] private List<PickUp> allObjectsPickUp;
-    [SerializeField] private GameObject tele;
+    [SerializeField] private GameObject tele,chausson;
     void Start()
     {
         ClickInventory.selectItem += SelectionItem;
@@ -17,6 +17,8 @@ public class Manager : MonoBehaviour
         Object.mugdrop += EnableObject;
         Object.mugdrop += doAfterStart;
         Object.telecommandeDrop += DogSpawn;
+        Object.chaussonDrop += BreakDance;
+        Cat.teleEnd += Chaussons;
     }
 
     void doStart()
@@ -31,13 +33,27 @@ public class Manager : MonoBehaviour
 
     void DogSpawn()
     {
+        player.colliderTV.enabled = false;
         tele.SetActive(true);
         _cat.Scared();
+    }
+
+    void BreakDance()
+    {
+        Debug.Log("ici je suis la ");
+        _cat.BreakDance();
+    }
+
+    void Chaussons()
+    {
+        _cat.Walk(DifferentsMoves[5].position);
+        chausson.GetComponent<PickUp>().enableToTake = true;
     }
     void SelectionItem(int index)
     {
         string nameIndex = "";
         nameIndex = _inventoryManager.GetInventory().GetListe()[index].objet.name;
+        Debug.Log(nameIndex);
         
         if (nameIndex == "laser")
         {
@@ -51,6 +67,10 @@ public class Manager : MonoBehaviour
         else if(nameIndex == "Mug")
         {
             player.Mug();
+        }
+        else if (nameIndex == "chausson")
+        {
+            player.Chausson();
         }
 
         
