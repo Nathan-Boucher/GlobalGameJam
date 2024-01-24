@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class Object : MonoBehaviour
 {
+    [SerializeField] private string nameObject;
     private Vector3 offset;
     private Collider2D Collider2D;
 
-    public static event Action mugdrop;
+    public static event Action mugdrop; 
+    public static event Action telecommandeDrop;
 
     void Start()
     {
@@ -33,10 +35,16 @@ public class Object : MonoBehaviour
         RaycastHit2D hit;
         if (hit = Physics2D.Raycast(rayOrigin, rayDirection))
         {
-            if (hit.transform.CompareTag("DropItem"))
+            Debug.Log(hit.transform.tag);
+            if (hit.transform.CompareTag("DropItem") && nameObject == "Mug" )
             {
                 transform.position = hit.transform.position;
                 mugdrop.Invoke();
+            }
+            else if(hit.transform.CompareTag("DropTelecommande") && nameObject == "telecommande")
+            {
+                transform.position = hit.transform.position;
+                telecommandeDrop.Invoke();
             }
         }
 

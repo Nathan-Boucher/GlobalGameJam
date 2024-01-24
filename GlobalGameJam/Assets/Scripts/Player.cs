@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject mugPrefab;
+    [SerializeField] private GameObject mugPrefab , telecommandePrefab;
     [SerializeField] private Transform spawnPosition;
+    [SerializeField] private bool mugUsed;
     public void Laser()
     {
         Debug.Log(("J'utilise le laser"));
@@ -14,11 +15,16 @@ public class Player : MonoBehaviour
     public void Telecommande()
     {
         Debug.Log(("J'utilise la télécommande"));
+        GameObject obj = Instantiate(telecommandePrefab, spawnPosition.position, Quaternion.identity);
     }
 
     public void Mug()
     {
-        Debug.Log("J'utilise le mug");
-        GameObject obj =  Instantiate(mugPrefab, spawnPosition.position , Quaternion.identity);
+        if (!mugUsed)
+        {
+            Debug.Log("J'utilise le mug");
+            GameObject obj =  Instantiate(mugPrefab, spawnPosition.position , Quaternion.identity);
+        }
+        mugUsed = true;
     }
 }

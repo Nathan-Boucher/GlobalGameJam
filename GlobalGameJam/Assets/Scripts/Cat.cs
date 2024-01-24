@@ -11,7 +11,8 @@ public enum StateCat
     jump,
     grinch,
     sleep,
-    idleGrinch
+    idleGrinch,
+    push
 }
 public class Cat : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class Cat : MonoBehaviour
     private bool check;
     void Update()
     {
-        if (direction != transform.position && state != StateCat.jump && state != StateCat.idle)
+        if (direction != transform.position && state != StateCat.jump && state != StateCat.idle && state != StateCat.idleGrinch)
         {
             transform.position = Vector3.MoveTowards(transform.position, direction, speed * Time.deltaTime);
         }
@@ -51,14 +52,28 @@ public class Cat : MonoBehaviour
             {
                 transform.position = ActualPlace.nextPosition;
                 enableHit = false;
-                IdleGrinch();
+                Push();
             }
         }
     }
 
+    public void Push()
+    {
+        state = StateCat.push;
+        direction = transform.position;
+        ActualizeAnimator();
+        StartCoroutine(PushTIme());
+    }
+
+    IEnumerator PushTIme()
+    {
+        yield return new WaitForSeconds(0.5f);
+        IdleGrinch();
+    }
     public void IdleGrinch()
     {
         state = StateCat.idleGrinch;
+        transform.position = ActualPlace.nextPosition;
         direction = transform.position;
         ActualizeAnimator();
     }
@@ -86,7 +101,6 @@ public class Cat : MonoBehaviour
     IEnumerator jumpTime()
     {
         yield return new WaitForSeconds(0.3f);
-        Debug.Log(ActualPlace.nextPosition);
         transform.position = ActualPlace.nextPosition;
         direction = transform.position;
         Idle();
@@ -193,14 +207,28 @@ public class Cat : MonoBehaviour
                 _animator.SetBool("jump",false);
                 _animator.SetBool("grinch",false);
                 break;
-            case StateCat.idleGrinch :
-                _animator.SetBool("idleGrinch" , true);
+            case StateCat.push :
+                GetComponent<SpriteRenderer>().sortingOrder = 9;
+                GetComponent<SpriteRenderer>().flipX = true;
+                _animator.SetBool("push" , true);
                 _animator.SetBool("idle" , false);
                 _animator.SetBool("grinch",false);
                 _animator.SetBool("jump" , false);
                 _animator.SetBool("walk" , false);
                 _animator.SetBool("sleep" , false);
                 break;
+            case StateCat.idleGrinch :
+                GetComponent<SpriteRenderer>().sortingOrder = 7;
+                GetComponent<SpriteRenderer>().flipX = false;
+                _animator.SetBool("push" , false);
+                _animator.SetBool("idle" , false);
+                _animator.SetBool("grinch",false);
+                _animator.SetBool("jump" , false);
+                _animator.SetBool("walk" , false);
+                _animator.SetBool("sleep" , false);
+                _animator.SetBool("idleGrinch" , true);
+                break;
+            
         }
     }
 }
