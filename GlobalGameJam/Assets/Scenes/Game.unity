@@ -4514,6 +4514,7 @@ GameObject:
   - component: {fileID: 1556359444}
   - component: {fileID: 1556359443}
   - component: {fileID: 1556359447}
+  - component: {fileID: 1556359448}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4696,6 +4697,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1556359448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556359442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b73398503c70140bc9662bf82ef3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audiosource: {fileID: 649955414}
+  droptelecommande: {fileID: 8300000, guid: 145970155a8a5bc47a74f8e75803de08, type: 3}
+  dogo: {fileID: 8300000, guid: c05c429b24a02cd4e8f64c5161a324d5, type: 3}
 --- !u!1 &1564615580
 GameObject:
   m_ObjectHideFlags: 0

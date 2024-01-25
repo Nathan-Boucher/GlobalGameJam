@@ -21,7 +21,7 @@ public class PickUp : MonoBehaviour
             if (item.objet.name == "Mug")
             {
                 _audioSource.clip = mug;
-                PlayAudio(1f);
+                _audioSource.Play();
                 pickUpMug.Invoke();
             }
             else
