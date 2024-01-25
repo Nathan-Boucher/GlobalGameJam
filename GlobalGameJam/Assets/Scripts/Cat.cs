@@ -19,6 +19,10 @@ public enum StateCat
 public class Cat : MonoBehaviour
 {
     public static event Action teleEnd;
+
+    [SerializeField] private AudioCat _audioCat;
+    [SerializeField] private AudioSource _audioSource;
+    
     [SerializeField] private float speed;
     [SerializeField] private Animator _animator;
     [SerializeField] private Vector3 direction,startPosition;
@@ -33,8 +37,24 @@ public class Cat : MonoBehaviour
         direction = transform.position;
     } 
     private bool check;
+    [SerializeField] private float valueGrinchSong;
+    [SerializeField] private int jumpfauteuil;
     void Update()
     {
+        valueGrinchSong += Time.deltaTime;
+        if (state == StateCat.grinch && valueGrinchSong > 3)
+        {
+            _audioCat.PlayAudio(_audioSource);
+            valueGrinchSong = 0;
+        }
+
+        if (state == StateCat.jump && ActualPlace.name == "JumpOnFauteuil" && jumpfauteuil == 0)
+        {
+            _audioSource.clip = _audioCat.JumpOnArmChair;
+            _audioCat.PlayAudio(_audioSource);
+            jumpfauteuil = 1;
+        }
+        
         if (direction != transform.position && state != StateCat.jump && state != StateCat.idle && state != StateCat.idleGrinch)
         {
             transform.position = Vector3.MoveTowards(transform.position, direction, speed * Time.deltaTime);
@@ -83,9 +103,17 @@ public class Cat : MonoBehaviour
     }
     public void Walk(Vector3 dir)
     {
+        _audioSource.clip = _audioCat.walk;
+        StartCoroutine(timesong(0.5f));
         direction = dir;
         state = StateCat.walk;
         ActualizeAnimator();
+    }
+
+    IEnumerator timesong(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _audioCat.PlayAudio(_audioSource);
     }
 
     public void Idle()
@@ -123,6 +151,8 @@ public class Cat : MonoBehaviour
     }
     public void Jump(Vector3 value)
     {
+        _audioSource.clip = _audioCat.jump;
+        StartCoroutine(timesong(0));
         state = StateCat.jump;
         transform.position = value;
         ActualizeAnimator();
@@ -142,6 +172,7 @@ public class Cat : MonoBehaviour
     [SerializeField] private int a;
     void Grinch()
     {
+        _audioSource.clip = _audioCat.grinch;
         a++;
         if (a == 2)
         {
@@ -177,7 +208,12 @@ public class Cat : MonoBehaviour
     IEnumerator SleepTime()
     {
         sleepstatut = true;
-        yield return new WaitForSeconds(0.5f);
+        _audioSource.clip = _audioCat.presleep;
+        StartCoroutine(timesong(0.5f));
+        yield return new WaitForSeconds(2f);
+        _audioSource.clip = _audioCat.sleep;
+        _audioSource.loop = true;
+        _audioSource.Play();
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z);
         direction = transform.position;
         ActualizeAnimator();
@@ -267,6 +303,9 @@ public class Cat : MonoBehaviour
                 _animator.SetBool("grinch",false);
                 break;
             case StateCat.push :
+                _audioSource.clip = _audioCat.cassegueule;
+                _audioSource.loop = false;
+                _audioSource.Play();
                 GetComponent<SpriteRenderer>().sortingOrder = 9;
                 GetComponent<SpriteRenderer>().flipX = true;
                 _animator.SetBool("push" , true);
@@ -277,6 +316,8 @@ public class Cat : MonoBehaviour
                 _animator.SetBool("sleep" , false);
                 break;
             case StateCat.idleGrinch :
+                _audioSource.clip = _audioCat.enervax;
+                StartCoroutine(timesong(0.5f));
                 GetComponent<SpriteRenderer>().sortingOrder = 7;
                 GetComponent<SpriteRenderer>().flipX = false;
                 _animator.SetBool("push" , false);

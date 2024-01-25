@@ -12,6 +12,7 @@ public class Manager : MonoBehaviour
     [SerializeField] private GameObject tele,chausson;
     void Start()
     {
+        GetComponent<AudioSource>().Play();
         ClickInventory.selectItem += SelectionItem;
         PickUp.pickUpMug += doStart;
         Object.mugdrop += EnableObject;
@@ -33,9 +34,17 @@ public class Manager : MonoBehaviour
 
     void DogSpawn()
     {
+        StartCoroutine(teleenable());
+    }
+
+    IEnumerator teleenable()
+    {
+        yield return new WaitForSeconds(1f);
         player.colliderTV.enabled = false;
         tele.SetActive(true);
         _cat.Scared();
+        yield return new WaitForSeconds(3f);
+        tele.SetActive(false);
     }
 
     void BreakDance()
