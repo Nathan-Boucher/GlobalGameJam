@@ -19,6 +19,7 @@ public enum StateCat
 public class Cat : MonoBehaviour
 {
     public static event Action teleEnd;
+    public static event Action catsleep;
 
     [SerializeField] private AudioCat _audioCat;
     [SerializeField] private AudioSource _audioSource;
@@ -207,6 +208,7 @@ public class Cat : MonoBehaviour
     }
     IEnumerator SleepTime()
     {
+        catsleep.Invoke();
         sleepstatut = true;
         _audioSource.clip = _audioCat.presleep;
         StartCoroutine(timesong(0.5f));
