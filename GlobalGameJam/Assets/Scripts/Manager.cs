@@ -12,6 +12,7 @@ public class Manager : MonoBehaviour
     [SerializeField] private GameObject tele,chausson;
     void Start()
     {
+        GetComponent<AudioSource>().Play();
         ClickInventory.selectItem += SelectionItem;
         PickUp.pickUpMug += doStart;
         Object.mugdrop += EnableObject;
