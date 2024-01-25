@@ -57,6 +57,7 @@ public class Object : MonoBehaviour
             }
             else if (hit.transform.CompareTag("DropChausson") && nameObject == "Herbe")
             {
+                Debug.Log(("Je repère le chat"));
                 herbeDrop.Invoke();
                 Destroy(gameObject);
             }

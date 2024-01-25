@@ -15,7 +15,9 @@ public enum StateCat
     push,
     scared,
     breakdance,
-    sulk
+    sulk,
+    krokmou,
+    fallmug
 }
 public class Cat : MonoBehaviour
 {
@@ -23,7 +25,7 @@ public class Cat : MonoBehaviour
     public static event Action catsleep;
 
     [SerializeField] private AudioCat _audioCat;
-    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioSource _audioSource,_audioSource2;
     
     [SerializeField] private float speed;
     [SerializeField] private Animator _animator;
@@ -32,6 +34,7 @@ public class Cat : MonoBehaviour
     [SerializeField] private List<OnePlace> allPlaces;
     [SerializeField] private OnePlace ActualPlace;
     [SerializeField] private bool enableHit;
+    
 
     void Start()
     {
@@ -160,6 +163,14 @@ public class Cat : MonoBehaviour
         state = StateCat.sulk;
         sulktime.Invoke();
         ActualizeAnimator();
+    }
+
+    public void Krokmou()
+    {
+        state = StateCat.krokmou;
+        ActualizeAnimator();
+        transform.position = new Vector3(1, -2.5f, 0);
+        direction = transform.position;
     }
     public void Jump(Vector3 value)
     {
@@ -296,6 +307,7 @@ public class Cat : MonoBehaviour
                 _animator.SetBool("grinch",false);
                 _animator.SetBool("sleep",false);
                 _animator.SetBool("jump",false);
+                _animator.SetBool("fallmug" , false);
                 break;
             case StateCat.jump :
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -358,7 +370,33 @@ public class Cat : MonoBehaviour
                 _animator.SetBool("sulk" , true);
                 _animator.SetBool("breakdance" , false);
                 break;
-            
+            case StateCat.krokmou :
+                _animator.SetBool("sulk" , false);
+                _animator.SetBool("krokmou" , true);
+                break;
+            case StateCat.fallmug :
+                _audioSource2.clip = _audioCat.fallmug;
+                _audioSource.loop = false;
+                _audioSource2.Play();
+                _animator.SetBool("fallmug" , true);
+                _animator.SetBool("grinch" , false);
+                break;
         }
+    }
+
+    public void fallingMug()
+    {
+        state = StateCat.fallmug;
+        ActualizeAnimator();
+        StartCoroutine(timemug());
+    }
+
+    IEnumerator timemug()
+    {
+        yield return new WaitForSeconds(0.2f);
+        GameObject.Find("MugObject(Clone)").transform.position = new Vector3(0.19f , -3.21f , 0);
+        GameObject.Find("MugObject(Clone)").transform.rotation = Quaternion.Euler(0, 0, -81.25f);
+        yield return new WaitForSeconds(2f);
+        Destroy(GameObject.Find("MugObject(Clone)"));
     }
 }

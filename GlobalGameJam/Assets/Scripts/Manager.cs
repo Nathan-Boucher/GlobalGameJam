@@ -19,6 +19,7 @@ public class Manager : MonoBehaviour
         Object.mugdrop += doAfterStart;
         Object.telecommandeDrop += DogSpawn;
         Object.chaussonDrop += BreakDance;
+        Object.herbeDrop += Krokmou;
         Cat.teleEnd += Chaussons;
         Cat.sulktime += EnableHerbe;
     }
@@ -30,6 +31,13 @@ public class Manager : MonoBehaviour
 
     void doAfterStart()
     {
+        StartCoroutine(After());
+    }
+
+    IEnumerator After()
+    {
+        _cat.fallingMug();
+        yield return new WaitForSeconds(1f);
         _cat.Walk(DifferentsMoves[3].position);
     }
 
@@ -50,8 +58,12 @@ public class Manager : MonoBehaviour
 
     void BreakDance()
     {
-        Debug.Log("ici je suis la ");
         _cat.BreakDance();
+    }
+
+    void Krokmou()
+    {
+        _cat.Krokmou();
     }
 
     void Chaussons()
