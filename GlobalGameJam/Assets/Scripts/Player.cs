@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject mugPrefab , telecommandePrefab , chaussonPrefab;
+    [SerializeField] private GameObject mugPrefab , telecommandePrefab , chaussonPrefab , herbePrefab;
     [SerializeField] private Transform spawnPosition;
-    [SerializeField] private bool mugUsed , chaussonUsed;
+    [SerializeField] private bool mugUsed , chaussonUsed , herbeUsed;
     [SerializeField] public BoxCollider2D colliderTV,colliderCat;
 
     void Start()
@@ -42,5 +42,15 @@ public class Player : MonoBehaviour
             GameObject obj = Instantiate(chaussonPrefab, spawnPosition.position, Quaternion.identity);
         }
         chaussonUsed = true;
+    }
+
+    public void Herbe()
+    {
+        if (!herbeUsed)
+        {
+            Debug.Log("J'utilise l'herbe");
+            GameObject obj = Instantiate(herbePrefab, spawnPosition.position, Quaternion.identity);
+        }
+        herbeUsed = true;
     }
 }

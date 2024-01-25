@@ -14,7 +14,8 @@ public enum StateCat
     idleGrinch,
     push,
     scared,
-    breakdance
+    breakdance,
+    sulk
 }
 public class Cat : MonoBehaviour
 {
@@ -148,6 +149,16 @@ public class Cat : MonoBehaviour
     public void BreakDance()
     {
         state = StateCat.breakdance;
+        ActualizeAnimator();
+        StartCoroutine(timeBreakdance());
+    }
+
+    public static event Action sulktime;
+    IEnumerator timeBreakdance()
+    {
+        yield return new WaitForSeconds(4f);
+        state = StateCat.sulk;
+        sulktime.Invoke();
         ActualizeAnimator();
     }
     public void Jump(Vector3 value)
@@ -342,6 +353,10 @@ public class Cat : MonoBehaviour
                 GetComponent<SpriteRenderer>().flipX = false;
                 _animator.SetBool("idleGrinch" , false);
                 _animator.SetBool("breakdance" , true);
+                break;
+            case StateCat.sulk :
+                _animator.SetBool("sulk" , true);
+                _animator.SetBool("breakdance" , false);
                 break;
             
         }

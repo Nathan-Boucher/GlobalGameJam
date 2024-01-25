@@ -20,6 +20,7 @@ public class Manager : MonoBehaviour
         Object.telecommandeDrop += DogSpawn;
         Object.chaussonDrop += BreakDance;
         Cat.teleEnd += Chaussons;
+        Cat.sulktime += EnableHerbe;
     }
 
     void doStart()
@@ -81,14 +82,19 @@ public class Manager : MonoBehaviour
         {
             player.Chausson();
         }
-
         
+        else if (nameIndex == "Herbe")
+        {
+            player.Herbe();
+        }
     }
     public void EnableObject()
     {
-        for (int i = 0; i < allObjectsPickUp.Count; i++)
-        {
-            allObjectsPickUp[i].enableToTake = true;
-        }
+        allObjectsPickUp[0].enableToTake = true;
+    }
+
+    public void EnableHerbe()
+    {
+        allObjectsPickUp[2].enableToTake = true;
     }
 }
