@@ -178,6 +178,8 @@ public class Cat : MonoBehaviour
     {
         sleepstatut = true;
         yield return new WaitForSeconds(0.5f);
+        transform.position = new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z);
+        direction = transform.position;
         ActualizeAnimator();
         sleepstatut = false;
     }
