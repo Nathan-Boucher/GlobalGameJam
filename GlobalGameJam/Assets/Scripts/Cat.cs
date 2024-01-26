@@ -33,7 +33,7 @@ public class Cat : MonoBehaviour
     [SerializeField] private StateCat state;
     [SerializeField] private List<OnePlace> allPlaces;
     [SerializeField] private OnePlace ActualPlace;
-    [SerializeField] private bool enableHit;
+    [SerializeField] private bool enableHit , krokmouslace;
     
 
     void Start()
@@ -60,13 +60,19 @@ public class Cat : MonoBehaviour
             jumpfauteuil = 1;
         }
         
-        if (direction != transform.position && state != StateCat.jump && state != StateCat.idle && state != StateCat.idleGrinch)
+        if (direction != transform.position && state != StateCat.jump && state != StateCat.idle && state != StateCat.idleGrinch && state != StateCat.krokmou)
         {
             transform.position = Vector3.MoveTowards(transform.position, direction, speed * Time.deltaTime);
         }
         else
         {
             CheckPosition();
+        }
+
+        if (krokmouslace && transform.localScale.x < 0.3f && transform.position.y < -1f)
+        {
+            transform.localScale += new Vector3(0.01f, 0.01f, 0.01f) * Time.deltaTime;
+            transform.localPosition += new Vector3(0, 0.1f, 0) * Time.deltaTime;
         }
     }
 
@@ -76,7 +82,7 @@ public class Cat : MonoBehaviour
         if (enableHit)
         {
             hitValue++;
-            if (hitValue == 10)
+            if (hitValue == 5)
             {
                 transform.position = ActualPlace.nextPosition;
                 enableHit = false;
@@ -85,10 +91,12 @@ public class Cat : MonoBehaviour
         }
     }
 
+    public static event Action pushaction;
     public void Push()
     {
         state = StateCat.push;
         direction = transform.position;
+        pushaction.Invoke();
         ActualizeAnimator();
         StartCoroutine(PushTIme());
     }
@@ -152,6 +160,9 @@ public class Cat : MonoBehaviour
     public void BreakDance()
     {
         state = StateCat.breakdance;
+        _audioSource2.clip = _audioCat.getdown;
+        _audioSource2.loop = false;
+        _audioSource2.Play();
         ActualizeAnimator();
         StartCoroutine(timeBreakdance());
     }
@@ -159,7 +170,7 @@ public class Cat : MonoBehaviour
     public static event Action sulktime;
     IEnumerator timeBreakdance()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(7f);
         state = StateCat.sulk;
         sulktime.Invoke();
         ActualizeAnimator();
@@ -188,7 +199,6 @@ public class Cat : MonoBehaviour
         transform.position = ActualPlace.nextPosition;
         direction = transform.position;
         Idle();
-
     }
 
     private bool grinchstatut;
@@ -371,6 +381,8 @@ public class Cat : MonoBehaviour
                 _animator.SetBool("breakdance" , false);
                 break;
             case StateCat.krokmou :
+                GetComponent<SpriteRenderer>().sortingOrder = 40;
+                krokmouslace = true;
                 _animator.SetBool("sulk" , false);
                 _animator.SetBool("krokmou" , true);
                 break;
@@ -383,7 +395,6 @@ public class Cat : MonoBehaviour
                 break;
         }
     }
-
     public void fallingMug()
     {
         state = StateCat.fallmug;

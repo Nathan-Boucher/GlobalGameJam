@@ -27,6 +27,7 @@ public class PickUp : MonoBehaviour
             else
             {
                 _audioSource.clip = grab;
+                _audioSource.loop = false;
                 _audioSource.Play();
             }
             Destroy(this.gameObject);
