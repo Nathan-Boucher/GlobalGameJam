@@ -1101,6 +1101,7 @@ MonoBehaviour:
     enervax: {fileID: 8300000, guid: 6c291adbddbd0774b8b7928bf1faa93d, type: 3}
     fallmug: {fileID: 8300000, guid: 1d315d2cc004db64a8109e0d8c365b0d, type: 3}
     getdown: {fileID: 8300000, guid: c4b3a29683eccac4e9346492c737d946, type: 3}
+    meowsleep: {fileID: 8300000, guid: 6c291adbddbd0774b8b7928bf1faa93d, type: 3}
   _audioSource: {fileID: 378118252}
   _audioSource2: {fileID: 378118253}
   speed: 2

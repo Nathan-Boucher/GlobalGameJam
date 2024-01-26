@@ -8,7 +8,7 @@ public class AudioCat
 { 
     public AudioClip walk,jump,grinch;
     public AudioClip JumpOnArmChair, presleep , sleep, cassegueule;
-    public AudioClip enervax , fallmug , getdown;
+    public AudioClip enervax , fallmug , getdown , meowsleep;
 
     public void PlayAudio(AudioSource source)
     {

@@ -82,6 +82,9 @@ public class Cat : MonoBehaviour
         if (enableHit)
         {
             hitValue++;
+            _audioSource2.clip = _audioCat.meowsleep;
+            _audioSource2.loop = false;
+            _audioSource2.Play();
             if (hitValue == 5)
             {
                 transform.position = ActualPlace.nextPosition;
