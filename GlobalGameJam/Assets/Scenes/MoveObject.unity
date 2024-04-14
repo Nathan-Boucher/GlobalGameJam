@@ -389,7 +389,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -552,5 +552,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 828655001}
   - {fileID: 267163418}
-  - {fileID: 1439781246}
   - {fileID: 1685342661}
+  - {fileID: 1439781246}

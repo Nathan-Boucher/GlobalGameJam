@@ -6,10 +6,14 @@ using UnityEngine;
 
 public class Object : MonoBehaviour
 {
-    public static Object currentObject;
-    private bool selected;
+    [SerializeField] private string nameObject;
     private Vector3 offset;
     private Collider2D Collider2D;
+
+    public static event Action mugdrop; 
+    public static event Action telecommandeDrop;
+    public static event Action chaussonDrop;
+    public static event Action herbeDrop;
 
     void Start()
     {
@@ -33,9 +37,29 @@ public class Object : MonoBehaviour
         RaycastHit2D hit;
         if (hit = Physics2D.Raycast(rayOrigin, rayDirection))
         {
-            if (hit.transform.CompareTag("DropItem"))
+            Debug.Log(hit.transform.tag);
+            if (hit.transform.CompareTag("DropItem") && nameObject == "Mug" )
             {
                 transform.position = hit.transform.position;
+                mugdrop.Invoke();
+            }
+            else if(hit.transform.CompareTag("DropTelecommande") && nameObject == "telecommande")
+            {
+                transform.position = hit.transform.position;
+                telecommandeDrop.Invoke();
+                Destroy(gameObject);
+            }
+            else if (hit.transform.CompareTag("DropChausson") && nameObject == "chausson")
+            {
+                transform.position = hit.transform.position;
+                chaussonDrop.Invoke();
+                Destroy(gameObject);
+            }
+            else if (hit.transform.CompareTag("DropChausson") && nameObject == "Herbe")
+            {
+                Debug.Log(("Je repère le chat"));
+                herbeDrop.Invoke();
+                Destroy(gameObject);
             }
         }
 

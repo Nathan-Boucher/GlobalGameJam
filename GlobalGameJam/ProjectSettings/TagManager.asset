@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - DropItem
+  - DropTelecommande
+  - Mug
+  - DropChausson
   layers:
   - Default
   - TransparentFX
